@@ -16,6 +16,32 @@ class Library {
     var allBooks: [Book] {
         return books
     }
+    var allAuthors: [String] {
+        return books.map({ (currentBook) -> String in
+            return currentBook.author
+        })
+    }
+    var allReadBooksTitles: [String] {
+        return books.compactMap { (currentBook) -> String? in
+            if currentBook.note != nil {
+                return currentBook.title
+            } else {
+                return nil
+            }
+        }
+    }
+
+    var biggestBook: Book? {
+        return books.max(by: { (lhs, rhs) -> Bool in
+            return lhs.nbOfPages > rhs.nbOfPages
+        })
+
+//        let minComparator: (Book, Book) -> Bool = { (lhs, rhs) -> Bool in
+//            return lhs.nbOfPages > rhs.nbOfPages
+//        }
+//
+//        books.min(by: minComparator)
+    }
 
     func add(_ book: Book) {
         books.append(book)
@@ -28,8 +54,18 @@ class Library {
     }
 
     func find(_ searchString: String, in field: SearchField) -> [Book] {
-        #warning("To fix")
-        return []
+
+        return books.filter({ (currentBook) -> Bool in
+            switch field {
+            case .title:
+                return currentBook.title.lowercased().contains(searchString.lowercased())
+            case .author:
+                return currentBook.author.lowercased().contains(searchString.lowercased())
+            case .isbn:
+                return currentBook.isbn.lowercased().contains(searchString.lowercased())
+            }
+        })
+
     }
 }
 
