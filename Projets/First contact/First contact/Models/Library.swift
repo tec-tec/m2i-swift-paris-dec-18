@@ -22,8 +22,9 @@ class Library {
     }
 
     func remove(_ book: Book) {
-        #warning("To fix")
-        books.removeFirst()
+        if let index = books.firstIndex(of: book) {
+            books.remove(at: index)
+        }
     }
 
     func find(_ searchString: String, in field: SearchField) -> [Book] {
