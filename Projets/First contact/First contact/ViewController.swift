@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var isDigitalSwitch: UISwitch!
     @IBOutlet weak var isReadSwitch: UISwitch!
     @IBOutlet weak var notationSlider: UISlider!
+    @IBOutlet weak var notationStack: UIStackView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +30,7 @@ class ViewController: UIViewController {
 
     @IBAction func readValueChanged(_ sender: UISwitch) {
 
-        notationSlider.isHidden = !sender.isOn
+        notationStack.isHidden = !sender.isOn
     }
 
     @IBAction func save(_ sender: UIButton) {
