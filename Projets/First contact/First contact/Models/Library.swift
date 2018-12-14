@@ -9,7 +9,13 @@
 import Foundation
 
 class Library {
-    private var books: [Book] = []
+
+    static let shared = Library()
+    private var books: [Book]
+
+    private init() {
+        books = []
+    }
     var count: Int {
         return books.count
     }

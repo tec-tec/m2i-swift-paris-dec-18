@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    let library = Library()
+    let library = Library.shared
 
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var authorTextField: UITextField!
@@ -25,7 +25,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-
     }
 
     @IBAction func readValueChanged(_ sender: UISwitch) {
@@ -33,7 +32,13 @@ class ViewController: UIViewController {
         notationStack.isHidden = !sender.isOn
     }
 
-    @IBAction func save(_ sender: UIButton) {
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        dismiss(animated: true) {
+            print("Animation terminée")
+        }
+    }
+
+    @IBAction func save(_ sender: UIBarButtonItem) {
 
         guard let author = authorTextField.text, author.count > 0 else { return }
         guard let title = titleTextField.text, title.count > 0 else { return }
@@ -47,6 +52,7 @@ class ViewController: UIViewController {
 
         let newBook = Book(author: author, title: title, nbOfPages: nbPagesInt, isbn: isbn, isDigital: isDigitalSwitch.isOn, note: note)
         library.add(newBook)
+        dismiss(animated: true, completion: nil)
     }
 }
 
