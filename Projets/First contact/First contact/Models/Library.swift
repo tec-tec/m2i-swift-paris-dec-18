@@ -51,11 +51,17 @@ class Library {
 
     func add(_ book: Book) {
         books.append(book)
+
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.post(name: Notification.Name("libraryDidChange"), object: self)
     }
 
     func remove(_ book: Book) {
         if let index = books.firstIndex(of: book) {
             books.remove(at: index)
+
+            let notificationCenter = NotificationCenter.default
+            notificationCenter.post(name: Notification.Name("libraryDidChange"), object: self)
         }
     }
 

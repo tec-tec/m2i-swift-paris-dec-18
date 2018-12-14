@@ -15,8 +15,13 @@ class BooksTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(forName: Notification.Name("libraryDidChange"), object: library, queue: OperationQueue.main) { (notif) -> Void in
+            self.tableView.reloadData()
+        }
+
         DispatchQueue.global(qos: .userInitiated).async {
-            for i in 0...1000000 {
+            for i in 0...3 {
                 let newBook = Book(author: "Auteur \(i)", title: "Titre \(Int.random(in: 0...1000))", nbOfPages: 567, isbn: "rtfghjb", isDigital: true, note: nil)
                 self.library.add(newBook)
             }
@@ -24,8 +29,11 @@ class BooksTableViewController: UITableViewController {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
-
         }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
 
     // MARK: - Table view data source
