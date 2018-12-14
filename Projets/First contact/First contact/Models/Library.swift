@@ -54,6 +54,9 @@ class Library {
 
         let notificationCenter = NotificationCenter.default
         notificationCenter.post(name: Notification.Name("libraryDidChange"), object: self)
+
+        let userDef = UserDefaults.standard
+        userDef.set(book.title, forKey: "lastBookTitle")
     }
 
     func remove(_ book: Book) {
