@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Book: Equatable {
+struct Book: Equatable, Codable {
     let author: String
     let title: String
     let nbOfPages: Int

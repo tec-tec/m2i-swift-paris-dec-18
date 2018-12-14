@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Library {
+class Library: Codable {
 
     static let shared = Library()
     private var books: [Book]
@@ -57,6 +57,8 @@ class Library {
 
         let userDef = UserDefaults.standard
         userDef.set(book.title, forKey: "lastBookTitle")
+
+        save()
     }
 
     func remove(_ book: Book) {
@@ -80,7 +82,43 @@ class Library {
                 return currentBook.isbn.lowercased().contains(searchString.lowercased())
             }
         })
+    }
+
+    func save() {
+
+        let jsonEncoder = JSONEncoder()
+        let plistEncoder = PropertyListEncoder()
+        plistEncoder.outputFormat = .xml
+
+        if let jsondData = try? jsonEncoder.encode(self) {
+            print(jsondData)
+            let jsonString = String(data: jsondData, encoding: .utf8)
+
+            if let baseURL = documentFolderURL() {
+                let completeURL = baseURL.appendingPathComponent("library.json")
+                try? jsondData.write(to: completeURL)
+            }
+
+            let decoder = JSONDecoder()
+            let savedLibrary = try? decoder.decode(Library.self, from: jsondData)
+        }
+
+        if let plistData = try? plistEncoder.encode(self) {
+            print(plistData)
+            let plistString = String(data: plistData, encoding: .utf8)
+
+            let decoder = PropertyListDecoder()
+            let savedLibrary = try? decoder.decode(Library.self, from: plistData)
+        }
+
+        print(documentFolderURL())
 
     }
 }
 
+func documentFolderURL() -> URL? {
+
+    let fileManager = FileManager.default
+    let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+    return url
+}
