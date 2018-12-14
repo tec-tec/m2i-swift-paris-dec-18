@@ -22,7 +22,7 @@ class BooksTableViewController: UITableViewController {
 
         DispatchQueue.global(qos: .userInitiated).async {
             for i in 0...3 {
-                let newBook = Book(author: "Auteur \(i)", title: "Titre \(Int.random(in: 0...1000))", nbOfPages: 567, isbn: "rtfghjb", isDigital: true, note: nil)
+                let newBook = Book(author: "Auteur \(i)", title: "Titre \(Int.random(in: 0...1000))", nbOfPages: 567, isbn: "rtfghjb", isDigital: true, note: nil, id: nil)
                 self.library.add(newBook)
             }
 

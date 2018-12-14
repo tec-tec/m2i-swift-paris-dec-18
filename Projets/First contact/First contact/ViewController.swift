@@ -50,7 +50,7 @@ class ViewController: UIViewController {
             note = notationSlider.value
         }
 
-        let newBook = Book(author: author, title: title, nbOfPages: nbPagesInt, isbn: isbn, isDigital: isDigitalSwitch.isOn, note: note)
+        let newBook = Book(author: author, title: title, nbOfPages: nbPagesInt, isbn: isbn, isDigital: isDigitalSwitch.isOn, note: note, id: nil)
         library.add(newBook)
         dismiss(animated: true, completion: nil)
     }
